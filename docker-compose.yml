@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  shell:
+    build:
+      context: ./shell
+      args:
+        CATALOG_URL: http://localhost/catalog
+        CART_URL: http://localhost/cart
+        PROFILE_URL: http://localhost/profile
+    ports:
+      - "3000:80"
+
+  mfe-catalog:
+    build: ./mfe-catalog
+    ports:
+      - "3001:80"
+
+  mfe-cart:
+    build: ./mfe-cart
+    ports:
+      - "3002:80"
+
+  mfe-profile:
+    build: ./mfe-profile
+    ports:
+      - "3003:80"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - shell
+      - mfe-catalog
+      - mfe-cart
+      - mfe-profile
