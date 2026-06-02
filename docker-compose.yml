@@ -9,22 +9,22 @@ services:
         CART_URL: http://localhost/cart
         PROFILE_URL: http://localhost/profile
     ports:
-      - "3000:80"
+      - "127.0.0.1:3000:80"
 
   mfe-catalog:
     build: ./mfe-catalog
     ports:
-      - "3001:80"
+      - "127.0.0.1:3001:80"
 
   mfe-cart:
     build: ./mfe-cart
     ports:
-      - "3002:80"
+      - "127.0.0.1:3002:80"
 
   mfe-profile:
     build: ./mfe-profile
     ports:
-      - "3003:80"
+      - "127.0.0.1:3003:80"
 
   nginx:
     build: ./nginx
