@@ -1,3 +1,4 @@
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { ModuleFederationPlugin } = require('webpack').container
 
@@ -15,6 +16,7 @@ module.exports = {
   },
   output: {
     publicPath: 'auto',
+    path: path.resolve(__dirname, 'dist'),
   },
   resolve: { extensions: ['.jsx', '.js'] },
   module: {
@@ -39,9 +41,9 @@ module.exports = {
         profile: `profile@${PROFILE_URL}/remoteEntry.js`,
       },
       shared: {
-        react: { singleton: true, requiredVersion: '^18.2.0' },
-        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
-        'react-router-dom': { singleton: true, requiredVersion: '^6.22.0' },
+        react: { singleton: true, strictVersion: true, requiredVersion: '^18.2.0' },
+        'react-dom': { singleton: true, strictVersion: true, requiredVersion: '^18.2.0' },
+        'react-router-dom': { singleton: true, strictVersion: true, requiredVersion: '^6.22.0' },
       },
     }),
     new HtmlWebpackPlugin({ template: './public/index.html' }),
