@@ -6,6 +6,7 @@ export default function Navbar() {
   const location = useLocation()
 
   useEffect(() => {
+    setCartCount(window.__APP_STORE__.cartCount)
     const unsubscribe = window.__APP_STORE__.subscribe(store => {
       setCartCount(store.cartCount)
     })
