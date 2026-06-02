@@ -5,7 +5,7 @@
       <p class="item-name">{{ item.name }}</p>
       <p class="item-price">${{ item.price }}</p>
     </div>
-    <button @click="$emit('remove', item.id)" class="remove-btn">✕</button>
+    <button @click="$emit('remove', item.cartId)" class="remove-btn">✕</button>
   </div>
 </template>
 
