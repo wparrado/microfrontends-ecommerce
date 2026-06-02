@@ -12,8 +12,16 @@ export default function ProductCard({ product }) {
     }))
 
     if (window.__APP_STORE__) {
+      const item = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        cartId: Date.now() + Math.random(),
+      }
       window.__APP_STORE__.update({
         cartCount: window.__APP_STORE__.cartCount + 1,
+        cartItems: [...window.__APP_STORE__.cartItems, item],
       })
     }
   }

@@ -46,20 +46,26 @@ export default {
     },
   },
   mounted() {
-    this._cartHandler = (event) => {
-      this.items.push({ ...event.detail, cartId: this.nextCartId++ })
+    // Los CustomEvents son efímeros: si CartApp no está montado cuando se disparan,
+    // los items se pierden. __APP_STORE__ persiste entre navegaciones, por eso
+    // es la fuente de verdad para los items del carrito.
+    if (window.__APP_STORE__) {
+      this.items = [...(window.__APP_STORE__.cartItems || [])]
+      this._storeUnsub = window.__APP_STORE__.subscribe(store => {
+        this.items = [...(store.cartItems || [])]
+      })
     }
-    window.addEventListener('add-to-cart', this._cartHandler)
   },
   beforeUnmount() {
-    window.removeEventListener('add-to-cart', this._cartHandler)
+    if (this._storeUnsub) this._storeUnsub()
   },
   methods: {
     removeItem(cartId) {
-      this.items = this.items.filter(item => item.cartId !== cartId)
       if (window.__APP_STORE__) {
+        const cartItems = window.__APP_STORE__.cartItems.filter(i => i.cartId !== cartId)
         window.__APP_STORE__.update({
-          cartCount: Math.max(0, window.__APP_STORE__.cartCount - 1),
+          cartItems,
+          cartCount: Math.max(0, cartItems.length),
         })
       }
     },

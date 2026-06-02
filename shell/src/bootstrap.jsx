@@ -6,6 +6,7 @@ import App from './App'
 // without importing anything from shell. Minimal reactive event bus.
 window.__APP_STORE__ = window.__APP_STORE__ ?? {
   cartCount: 0,
+  cartItems: [],
   listeners: [],
   subscribe(fn) {
     this.listeners.push(fn)
